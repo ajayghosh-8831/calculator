@@ -4,6 +4,12 @@
   margin: 40px auto;
   font-family: Arial, sans-serif;
 }
+/* Make the whole window light blue */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #e6f7ff; /* light blue */
+}
 label {
   display: block;
   margin-bottom: 10px;
