@@ -17,8 +17,6 @@ export interface ProbabilityResponse {
   providedIn: 'root'
 })
 export class ProbabilityService {
-  // Use a relative path by default. If `api-config.json` defines `apiBase`, it will be
-  // prefixed to the API path so requests go directly to that backend.
   private readonly apiPath = '/api/Calculator/calculate';
   private readonly configUrl = '/assets/api-config.json';
 
@@ -27,8 +25,7 @@ export class ProbabilityService {
 
   constructor(private http: HttpClient) {
     this.apiBase$ = this.http.get<{ apiBase?: string }>(this.configUrl).pipe(
-      // If config defines apiBase use it; otherwise default to the explicit backend host
-      map(cfg => cfg && cfg.apiBase ? cfg.apiBase : 'https://localhost:7039'),
+      map(cfg => cfg && cfg.apiBase ? cfg.apiBase : ''),
       catchError(() => of('https://localhost:7039')),
       shareReplay(1)
     );
@@ -40,8 +37,7 @@ export class ProbabilityService {
       'Content-Type': 'application/json'
     });
 
-    // Use configured apiBase if provided, otherwise use relative path (which will be
-    // proxied by `ng serve --proxy-config` during development).
+
     return this.apiBase$.pipe(
       tap(base => console.debug('[ProbabilityService] apiBase resolved:', base)),
       switchMap(base => {

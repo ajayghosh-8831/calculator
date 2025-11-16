@@ -64,15 +64,12 @@ export class AppComponent {
       },
       error: (err) => {
         console.error('API error response:', err);
-        // Prefer a helpful message from server if available
         if (err && err.error) {
-          // If backend returned JSON with a message, display it
           if (typeof err.error === 'string') {
             this.error = err.error;
           } else if (err.error.message) {
             this.error = err.error.message;
           } else {
-            // Fallback to status text / code
             this.error = `Server returned ${err.status}: ${err.statusText || 'Bad Request'}`;
           }
         } else {
@@ -83,7 +80,6 @@ export class AppComponent {
   }
 
   clear() {
-    // Reset the form values to defaults and clear UI state
     if (this.form) {
       this.form.reset({ probabilityA: '', probabilityB: '', operation: 'CombinedWith' });
       this.form.markAsPristine();
